@@ -17,6 +17,8 @@ const Body=()=>{
     const [searchText,setSearchText] = useState(""); // to create local state variables
       // returns = [variable name, function to update state]
     const [restaurants,setRestaurants]=useState(restaurantList);  
+
+    
     
     return(
        <> 
