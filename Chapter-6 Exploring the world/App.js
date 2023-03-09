@@ -11,7 +11,7 @@ const AppLayout=()=>{
   return(
      <>
      <Header/>
-     <Body/>
+     <Body/>  
      <Footer/>
      </> //React.Fragment =>empty tag
   )

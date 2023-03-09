@@ -1,41 +1,30 @@
-import { IMG_CDN_URL } from "../constants";
 
-// Restaurant card component: Image, name, cuisine
-const RestaurantCard = ({
+const RestaurantCard =({
   cloudinaryImageId,
   name,
   cuisines,
   area,
   lastMileTravelString,
   costForTwoString,
-  avgRating,
-}) => {
-  return (
-    <div className="card">
-      <img src={IMG_CDN_URL + cloudinaryImageId} />
-      <h3>{name}</h3>
-      <h5>{cuisines.join(", ")}</h5>
-      <h5>{area}</h5>
-      <span>
-        <h4
-          style={
-            avgRating < 4
-              ? { backgroundColor: "var(--light-red)" }
-              : avgRating === "--"
-              ? { backgroundColor: "white", color: "black" }
-              : { color: "white" }
-          }
-        >
-          <i className="fa-solid fa-star"></i>
-          {avgRating}
-        </h4>
-        <h4>•</h4>
-        <h4>{lastMileTravelString}</h4>
-        <h4>•</h4>
-        <h4>{costForTwoString}</h4>
-      </span>
-    </div>
-  );
-};
+  avgRating,})=>{
+  return(
+     <div className="card">
+     <img
+       src={
+         "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/" +
+         cloudinaryImageId
+       }
+     />
+     <h2>{name}</h2>
+     <h4>{cuisines.join(", ")}</h4>
+     <h4>{area}</h4>
+     <span>
+     <h4>{avgRating}</h4>
+       <h4>{lastMileTravelString}</h4>
+       <h4>{costForTwoString}</h4>
+     </span>
+   </div>
+  )
+}
 
 export default RestaurantCard;

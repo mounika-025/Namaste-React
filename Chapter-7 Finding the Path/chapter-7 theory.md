@@ -47,7 +47,7 @@ Case 3 :  When the `dependency array contains a condition`,  the callback functi
 useEffect(() => {
 	console.log("I run every-time when my condition changed")
 }, [condition]);
-```
+``` 
 
 
 ## Q: What is `SPA`?

@@ -1,105 +1,101 @@
+import { useEffect, useState } from "react";
+import { restaurantList } from "../constants";
 import RestaurantCard from "./RestaurantCard";
-import { useEffect, useState } from "react"; /* This is named export */
-import Shimmer from "./Shimmer"; /* This is default export */
-import { swiggy_api_URL } from "../constants";
+import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 
-// Filter the restaurant data according input type
-function filterData(searchText, restaurants) {
-  const filterData = restaurants.filter((restaurant) =>
+
+// Filter the restaurant data according the search
+function filterData(searchText,restaurants){
+    const filterData=restaurants.filter((restaurant)=>
     restaurant?.data?.name.toLowerCase().includes(searchText.toLowerCase())
-  );
-  return filterData;
+    );
+    return filterData;
+
 }
 
-// Body Component for body section: It contain all restaurant cards
-const Body = () => {
-  // useState: To create a state variable, searchText, allRestaurants and filteredRestaurants is local state variable
-  const [searchText, setSearchText] = useState("");
-  const [allRestaurants, setAllRestaurants] = useState([]);
-  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
+const Body=()=>{
 
-  // use useEffect for one time call getRestaurants using empty dependency array
-  useEffect(() => {
-    getRestaurants();
-  }, []);
+    const [searchText,setSearchText] = useState(""); // to create local state variables
+      // returns = [variable name, function to update state]
+    const [allRestaurants,setAllRestaurants]=useState([]); 
+    const [filteredRestaurants,setFilteredRestaurants]=useState([]); 
+    const [errorMessage, setErrorMessage] = useState(""); 
 
-  // async function getRestaurant to fetch Swiggy API data
-  async function getRestaurants() {
-    // handle the error using try... catch
-    try {
-      const data = await fetch(swiggy_api_URL);
-      const json = await data.json();
-      // updated state variable restaurants with Swiggy API data
-      setAllRestaurants(json?.data?.cards[2]?.data?.data?.cards);
-      setFilteredRestaurants(json?.data?.cards[2]?.data?.data?.cards);
-    } catch (error) {
-      console.log(error);
+    //useEffect to call getAllRestaurants for one time
+    useEffect(()=>{
+       getRestaurants();
+
+    },[])
+
+     // async function getRestaurant to fetch Swiggy API data
+    async function getRestaurants(){
+
+     // handle the error using try... catch   
+        try{
+            const data=await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.366077103395924&lng=78.53137616068125&page_type=DESKTOP_WEB_LISTING");
+        const json=await data.json();
+        console.log(json)
+        // optional chaining
+       setAllRestaurants(json?.data.cards[2]?.data?.data?.cards);
+       setFilteredRestaurants(json?.data.cards[2]?.data?.data?.cards);
+        }catch(error){
+            console.log(error)
+
+        }
+        
     }
-  }
 
-  // use searchData function and set condition if data is empty show error message
-  const searchData = (searchText, restaurants) => {
-    if (searchText !== "") {
-      const data = filterData(searchText, restaurants);
-      setFilteredRestaurants(data);
-      setErrorMessage("");
-      if (data.length === 0) {
-        setErrorMessage(`Sorry, we couldn't find any results for "${searchText}"`);
-      }
-    } else {
-      setErrorMessage("");
-      setFilteredRestaurants(restaurants);
+ const searchData=(searchText,allRestaurants)=>{
+    if(searchText != ""){
+        const data=filterData(searchText,allRestaurants)
+        setFilteredRestaurants(data);
+        setErrorMessage('')
+        if(data.length===0){
+            setErrorMessage("No Restaurants found")
+        }
+    }else{
+        setErrorMessage('')
+        setFilteredRestaurants(allRestaurants)
     }
-  };
 
-  // if allRestaurants is empty don't render restaurants cards
+ }   
+
+// if allRestaurants is empty don't render restaurants cards
   if (!allRestaurants) return null;
 
-  return (
-    <>
-      <div className="search-container">
-        <input
+    
+    return (
+       <> 
+       <div className="search-container">
+       <input
           type="text"
           className="search-input"
-          placeholder="Search a restaurant you want..."
+          placeholder="Search for restaurants and food... "
           value={searchText}
-          // update the state variable searchText when we typing in input box
           onChange={(e) => setSearchText(e.target.value)}
         ></input>
-        <button
-          className="search-btn"
-          onClick={() => {
-            // user click on button searchData function is called
-            searchData(searchText, allRestaurants);
-          }}
-        >
-          Search
-        </button>
-      </div>
-      {errorMessage && <div className="error-container">{errorMessage}</div>}
+            <button className="search-btn"
+            onClick={()=>{
+                searchData(searchText,allRestaurants);
+               
+            }}>
+                Search
+            </button>
+       </div>
+       {errorMessage && <div>{errorMessage}</div>}
+       {allRestaurants?.length==0?(<Shimmer/>):(<div className="res-list"> 
+            {filteredRestaurants.map((restaurant) => {
+                return(
+                    <Link  to={"/restaurant/" +restaurant.data.id} key={restaurant.data.id}><RestaurantCard  {...restaurant.data} /></Link>
 
-      {/* if restaurants data is not fetched then display Shimmer UI after the fetched data display restaurants cards */}
-      {allRestaurants?.length === 0 ? (
-        <Shimmer />
-      ) : (
-        <div className="res-list">
-          {/* We are mapping restaurants array and passing JSON array data to RestaurantCard component as props with unique key as restaurant.data.id */}
-          {filteredRestaurants.map((restaurant) => {
-            return (
-              <Link
-                to={"/restaurant/" + restaurant.data.id}
-                key={restaurant.data.id}
-              >
-                <RestaurantCard {...restaurant.data} />
-              </Link>
-            );
-          })}
-        </div>
-      )}
-    </>
-  );
-};
+                ) 
+            })}
+       </div>)}
+        
+       </>
+    )
+  }
 
-export default Body;
+
+export default Body  
