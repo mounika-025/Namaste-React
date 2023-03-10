@@ -251,20 +251,70 @@
 
   .restaurant-menu{
     width: auto;
+    margin: 50px 200px 0px 200px;
+    
    
     
   }
+
+  @media screen and (max-width: 768px) {
+    .restaurant-menu{
+      width: auto;
+      margin: 50px 100px 0px 100px;
+    }
+  
+  }  
   .restaurant-description{
     height:200px ;
     display: flex;
     
-    align-items: center;
-    background-color: #2d2d2d;
-    color: #e3e3e3;
+    
+    
+    color: #282c3f;
   }
   .restaurant-image{
-    height: 180px;
-    width: 250px;
+    height: 170px;
+    width: 200px;
     border-radius: 5px;
-    margin-left: 10px;
+
+    padding-right: 15px;
   }
+  .restaurant-description-details{
+    display: flex;
+    flex-direction: column;
+    
+  }
+
+  .restaurant-name{
+    font-size: 30px;
+    font-weight: 600;
+    color: #282c3f;
+    margin-bottom: 15px;
+   
+  }
+
+  .restaurant-cuisine{
+    font-size: 16px;
+    font-weight: 300;
+    margin-bottom: 0;
+    
+  }
+  .restaurant-area{
+    font-size: 16px;
+    font-weight: 300;
+  
+  }
+
+  @media screen and (max-width: 768px) {
+    .restaurant-image{
+      height: 120px;
+      width: 150px;
+      padding-right: 10px;
+    }
+    .restaurant-name{
+      font-size: 24px;
+      font-weight: 600;
+     
+    }
+  
+  }  
