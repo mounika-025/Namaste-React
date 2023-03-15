@@ -1,31 +1,16 @@
 import { useParams } from "react-router-dom"
 import { useEffect ,useState} from "react";
+import useRestaurantMenu from "../utils/useRestaurantMenu"
 import Shimmer from "./Shimmer";
 
 const RestaurantMenu=()=>{
 
     const {resId} =useParams(); // to read dynamic URL parameters
     
-    const [restaurant,setRestaurant] =useState(null)
+
+    const restaurant= useRestaurantMenu(resId);
 
     
-
-    useEffect(()=>{
-        getRestaurantMenu(); //to get restaurant info
-    },[])
-
-    async function getRestaurantMenu(){
-        try{
-        const data= await fetch("https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=17.345853&lng=78.552312&restaurantId=" + resId)
-
-        const json= await data.json();
-        console.log(json);
-        setRestaurant(json?.data)
-        } catch(error){
-            console.log(error)
-        }
-    };
-
     const menu =(restaurant?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card?.itemCards)
     console.log(menu)
     
