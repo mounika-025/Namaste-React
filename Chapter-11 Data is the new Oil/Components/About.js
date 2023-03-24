@@ -3,7 +3,7 @@
 const About = () => {
   return (
     <div className="about-page">
-      <h1>About Us Hello</h1>
+      <h1>About Us</h1>
       <p>We are a food delivery app dedicated to bringing delicious meals straight to your doorstep.</p>
       
       <p>We work with local restaurants to offer a wide variety of cuisines, from Italian to Indian to Chinese and more. Our delivery drivers are always prompt and courteous, ensuring that your food arrives fresh and hot.</p>
