@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useContext } from "react";
 import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnline from "../utils/useOnline";
+import UserContext from "../utils/UserContext";
 
 
 // Filter the restaurant data according the search
@@ -20,6 +21,8 @@ const Body=()=>{
     const [allRestaurants,setAllRestaurants]=useState([]); 
     const [filteredRestaurants,setFilteredRestaurants]=useState([]); 
     const [errorMessage, setErrorMessage] = useState(""); 
+
+    const {user,setUser} =useContext(UserContext)
 
     //useEffect to call getAllRestaurants for one time
     useEffect(()=>{
@@ -87,6 +90,13 @@ const Body=()=>{
             }}>
                 Search
             </button>
+            <input value={user.name} onChange={
+                e=> setUser({
+                    name:e.target.value,
+                    email: "another@example.com",
+                
+            })}>
+            </input>
        </div>
        {errorMessage && <div>{errorMessage}</div>}
        {allRestaurants?.length==0?(<Shimmer/>):(<div className="res-list"> 

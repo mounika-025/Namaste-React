@@ -1,6 +1,6 @@
 
 
-import React ,{lazy,Suspense}from "react"
+import React ,{lazy,Suspense, useState}from "react"
 import ReactDOM from "react-dom/client"
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
@@ -10,6 +10,7 @@ import Error from "./Components/Error";
 import Shimmer from "./Components/Shimmer";
 import RestaurantMenu from "./Components/RestaurantMenu";
 import { createBrowserRouter,RouterProvider,Outlet } from "react-router-dom";
+import UserContext from "./utils/UserContext";
 
 //Chunking
 //code splitting
@@ -22,12 +23,23 @@ const Instamart=lazy(()=> import("./Components/Instamart"));
 //Upon on demand loading ->upon render ->suspends loading =so we use suspense
 
 const AppLayout=()=>{
+
+  const [user,setUser]=useState({
+    name:"Nani",
+    email:"nani123@gmail.com"
+  });
+
   return(
-     <>
+     <UserContext.Provider //to override the default value
+     value={{
+      user:user,
+      setUser:setUser,
+    }}
+     >
      <Header/>
      <Outlet />  
      <Footer/>
-     </> //React.Fragment =>empty tag
+     </UserContext.Provider> //React.Fragment =>empty tag
   )
 }
 
