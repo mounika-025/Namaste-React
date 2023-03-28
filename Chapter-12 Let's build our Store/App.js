@@ -7,6 +7,7 @@ import Footer from "./Components/Footer";
 import Body from "./Components/Body";
 import About from "./Components/About";
 import Error from "./Components/Error";
+import Cart from "./Components/Cart";
 import Shimmer from "./Components/Shimmer";
 import RestaurantMenu from "./Components/RestaurantMenu";
 import { createBrowserRouter,RouterProvider,Outlet } from "react-router-dom";
@@ -69,7 +70,7 @@ const appRouter=createBrowserRouter([{
     },
     {
       path:"/cart",
-      element:<About/>,
+      element:<Cart/>,
     },
     {
       path:"/restaurant/:resId",
