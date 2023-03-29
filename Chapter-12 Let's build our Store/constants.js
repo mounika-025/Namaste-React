@@ -10,5 +10,6 @@ export const swiggy_api_URL =
   "https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.366077103395924&lng=78.53137616068125&page_type=DESKTOP_WEB_LISTING";
 
 // Swiggy API to get Restaurant Menu data
-export const menu_url ="https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=17.3993732&lng=78.44539770000002&restaurantId="
+export const menu_url ="https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=17.345853&lng=78.552312&restaurantId=" 
+
 
